@@ -1,0 +1,36 @@
+# print(program to analyze Covid-19 spread around the world)
+mport csv
+from datetime import datetime as dt
+import random as rand
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+
+with open('data.csv','r') as csvfile:
+    reader = csv.reader(csvfile)
+    covid = [row for row in reader ]
+
+# Poping indices 
+## <0> iso_code <1> location
+headings = covid.pop(0)
+locations = list(set([x[1] for x in covid]))
+
+dates= list (set([x[2] for x in covid]))
+
+# dates in datetime 
+for i,item in enumerate(covid):
+  covid[i][2]=dt.strptime(item[2],"%Y-%m-%d")
+
+
+## select random country
+country=rand.choice(locations)
+dates=[x[2] for x in data if x[1]==country]
+cases=[item[3] for item in data if x[1]==country]
+
+## generate a graph
+fig = plt.figure()
+cov = fig.add_subplot()
+cov.plot(dates,cases,label=f"Total cases in {country}")
+cov.set_xlabel("Dates")
+cov.set_ylabel(f"Total Covid-19 cases {country}")
+plt.legend()
+plt.show()
